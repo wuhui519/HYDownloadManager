@@ -8,7 +8,6 @@
 
 #import "HYTableViewController.h"
 #import "HYImageTableViewCell.h"
-#import "AppDelegate.h"
 
 @interface HYTableViewController ()
 {
@@ -27,6 +26,9 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UIEdgeInsets contentInset = self.tableView.contentInset;
+    contentInset.bottom = self.tabBarController.tabBar.intrinsicContentSize.height;
+    self.tableView.contentInset = contentInset;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,12 +42,15 @@
 }
 
 - (NSUInteger)currentTabIndex {
-    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    UITabBarController *tabCtrl = (UITabBarController *)appDelegate.window.rootViewController;
+    UITabBarController *tabCtrl = self.tabBarController;
     if ([tabCtrl isKindOfClass:[UITabBarController class]]) {
         return tabCtrl.selectedIndex;
     }
     return 0;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 - (void)setArrayForParallel:(BOOL)parallel
