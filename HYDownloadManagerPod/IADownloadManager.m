@@ -150,14 +150,14 @@ void (^globalCompletionBlock)(BOOL success, id response, NSURL *url, IADownloadM
                                                  useCache:useCache
                                                  filePath:path
                                                  progressBlock:^(float progress, id x) {
-                                                     
-                                                     globalProgressBlock(progress, url, self);
-                                                     
+                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                         globalProgressBlock(progress, url, self);
+                                                     });
                                                  }
                                                  completionBlock:^(BOOL success, id response) {
-                                                     
-                                                     globalCompletionBlock(success, response, url, self);
-                                                     
+                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                         globalCompletionBlock(success, response, url, self);
+                                                     });
                                                  }];
     
     if(downloadingOperation)

@@ -108,6 +108,7 @@
 
 - (void)downloadManagerDidProgress:(float)progress
 {
+    NSLog(@"progress=%f", progress);
     label.text = [NSString stringWithFormat:@"%f %%", progress * 100];
 }
 

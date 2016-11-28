@@ -13,7 +13,6 @@
 
 @interface IADownloadOperation : NSOperation
 @property (nonatomic, strong) NSURL *url;
-@property (nonatomic, strong) AFHTTPRequestOperation *operation;
 
 + (IADownloadOperation*) downloadingOperationWithURL:(NSURL*)url
                                             useCache:(BOOL)useCache

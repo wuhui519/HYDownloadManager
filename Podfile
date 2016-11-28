@@ -1,4 +1,4 @@
 target 'HYDownloadManager' do
-  pod 'AFNetworking', '~> 2.5'
+  pod 'AFNetworking', '~> 3.1'
   pod 'EGOCache', '~> 2.0'
 end

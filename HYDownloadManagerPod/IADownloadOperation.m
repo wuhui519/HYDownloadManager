@@ -11,14 +11,17 @@
 #import "IACacheManager.h"
 #import <CommonCrypto/CommonDigest.h>
 
-@implementation IADownloadOperation
+@interface IADownloadOperation ()
 {
     BOOL executing;
     BOOL cancelled;
     BOOL finished;
-    NSString *_tempFilePath;
     NSString *_finalFilePath;
 }
+@property (nonatomic, strong) NSURLSessionDownloadTask *dataTask;
+@end
+
+@implementation IADownloadOperation
 
 + (IADownloadOperation*) downloadingOperationWithURL:(NSURL*)url
                                             useCache:(BOOL)useCache
@@ -37,62 +40,33 @@
         return nil;
     }
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-
-    if (filePath)
-    {
-        NSString *fname = [NSString stringWithFormat:@"tempDownload%d", arc4random_uniform(INT_MAX)];
-        op->_tempFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:fname];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:op->_tempFilePath])
-        {
-            [[NSFileManager defaultManager] removeItemAtPath:op->_tempFilePath error:nil];
-        }
-        operation.outputStream = [[NSOutputStream alloc] initToFileAtPath:op->_tempFilePath append:NO];
-    }
-    op.operation = operation;
-    
     __weak IADownloadOperation *weakOp = op;
-    [op.operation
-     setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-         
-         
-         [IADownloadOperation setCacheWithData:responseObject url:url];
-         __strong IADownloadOperation *StrongOp = weakOp;
-         if(StrongOp != nil && StrongOp->_tempFilePath && StrongOp->_finalFilePath)
-         {
-             NSError *error = nil;
-             [[NSFileManager defaultManager] removeItemAtPath:StrongOp->_finalFilePath error:&error];
-             [[NSFileManager defaultManager] moveItemAtPath:StrongOp->_tempFilePath toPath:StrongOp->_finalFilePath error:&error];
-         }
-         [StrongOp finish];
-         completionBlock(YES, responseObject);
-         
-     }
-     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         
-         __strong IADownloadOperation *StrongOp = weakOp;
-         completionBlock(NO, nil);
-         [StrongOp finish];
-     }];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    NSURLSessionDownloadTask *dataTask =
+        [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+            float progress = downloadProgress.fractionCompleted;
+            progressBlock(progress, url);
+        } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+            NSData *responseObject = [[NSFileManager defaultManager] contentsAtPath:targetPath.relativePath];
+            [IADownloadOperation setCacheWithData:responseObject url:url];
+            __strong IADownloadOperation *StrongOp = weakOp;
+            NSURL *fileURL = nil;
+            if(StrongOp != nil && StrongOp->_finalFilePath)
+            {
+                fileURL = [NSURL URLWithString:StrongOp->_finalFilePath];
+            }
+            [StrongOp finish];
+            completionBlock(YES, responseObject);
+            return fileURL;
+        } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+            __strong IADownloadOperation *StrongOp = weakOp;
+            completionBlock(NO, nil);
+            [StrongOp finish];
+        }];
     
-     [op.operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-         
-         float progress;
-         
-         if (totalBytesExpectedToRead == -1)
-         {
-             progress = -32;
-         }
-         else
-         {
-             progress = (double)totalBytesRead / (double)totalBytesExpectedToRead;
-         }
-         
-         progressBlock(progress, url);
-     }];
-    
+    op.dataTask = dataTask;
     return op;
 }
 
@@ -104,7 +78,7 @@
     executing = YES;
     [self didChangeValueForKey:@"isExecuting"];
     
-    [self.operation start];
+    [self.dataTask resume];
 }
 
 - (void)finish
@@ -166,13 +140,13 @@
 
 - (void)startOperation
 {
-    [self.operation start];
+    [self.dataTask resume];
     executing = YES;
 }
 
 - (void)stop
 {
-    [self.operation cancel];
+    [self.dataTask cancel];
     cancelled = YES;
 }
 
