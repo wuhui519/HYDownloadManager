@@ -54,13 +54,13 @@
     
 #if USE_BLOCKS
     [IASequentialDownloadManager attachListenerWithObject:self
-                                            progressBlock:^(float progress, int index) {
+                                            progressBlock:^(float progress, NSInteger index) {
                                                 
                                                 [self sequentialManagerProgress:progress
                                                                         atIndex:index];
                                                 
                                             }
-                                          completionBlock:^(BOOL success, id response, int index) {
+                                          completionBlock:^(BOOL success, id response, NSInteger index) {
                                               
                                               [self sequentialManagerDidFinish:success
                                                                       response:response
@@ -112,17 +112,17 @@
 }
 
 //Sequential download callbacks
-- (void)sequentialManagerDidFinish:(BOOL)success response:(id)response atIndex:(int)index
+- (void)sequentialManagerDidFinish:(BOOL)success response:(id)response atIndex:(NSInteger)index
 {
-    int tag = 12332100 + index + 1;
+    NSInteger tag = 12332100 + index + 1;
     UIImageView *imageView = (UIImageView*)[self viewWithTag:tag];
     UIImage *image = [UIImage imageWithData:response];
     [imageView setImage:image];
 }
 
-- (void)sequentialManagerProgress:(float)progress atIndex:(int)index
+- (void)sequentialManagerProgress:(float)progress atIndex:(NSInteger)index
 {
-    label.text = [NSString stringWithFormat:@"item %d, %f %%", index, progress * 100];
+    label.text = [NSString stringWithFormat:@"item %ld, %f %%", (long)index, progress * 100];
 }
 
 - (void)setViewsForParallel:(BOOL)parallel_
