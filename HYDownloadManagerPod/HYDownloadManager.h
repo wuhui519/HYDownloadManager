@@ -1,5 +1,5 @@
 //
-//  IADownloadManager.h
+//  HYDownloadManager.h
 //  DownloadManager
 //
 //  Created by Omar on 8/2/13.
@@ -7,17 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-@class IADownloadOperation;
+@class HYDownloadOperation;
 
-typedef void (^IAProgressBlock)(float progress, NSURL *url);
-typedef void (^IACompletionBlock)(BOOL success, id response);
+typedef void (^HYProgressBlock)(float progress, NSURL *url);
+typedef void (^HYCompletionBlock)(BOOL success, id response);
 
-@protocol IADownloadManagerDelegate <NSObject>
+@protocol HYDownloadManagerDelegate <NSObject>
 - (void) downloadManagerDidProgress:(float)progress;
 - (void) downloadManagerDidFinish:(BOOL)success response:(id)response;
 @end
 
-@interface IADownloadManager : NSObject
+@interface HYDownloadManager : NSObject
 
 //Start the download request for a URL, note that the same URL will never be downloaded twice
 + (void) downloadItemWithURL:(NSURL*)url
@@ -31,17 +31,17 @@ typedef void (^IACompletionBlock)(BOOL success, id response);
 //Delegate based events
 // 1 url download operation can have multiple listeners
 // But 1 listener cannot listen to 1 url download operation
-+ (void) attachListener:(id<IADownloadManagerDelegate>)listener toURL:(NSURL*)url;
++ (void) attachListener:(id<HYDownloadManagerDelegate>)listener toURL:(NSURL*)url;
 
 //Detach the listener from listening to more events,
 //Please note that the url will still download
-+ (void) detachListener:(id<IADownloadManagerDelegate>)listener;
++ (void) detachListener:(id<HYDownloadManagerDelegate>)listener;
 
 //Block based events
 //object param must be equal to self to ensure that 1 object can listen to only 1 download operation
 + (void) attachListenerWithObject:(id)object
-                    progressBlock:(IAProgressBlock)progressBlock
-                  completionBlock:(IACompletionBlock)completionBlock
+                    progressBlock:(HYProgressBlock)progressBlock
+                  completionBlock:(HYCompletionBlock)completionBlock
                             toURL:(NSURL*)url;
 //Remove listener
 + (void) detachObjectFromListening:(id)object;

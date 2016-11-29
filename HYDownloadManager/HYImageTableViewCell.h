@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "IADownloadManager.h"
-#import "IASequentialDownloadManager.h"
+#import "HYDownloadManager.h"
+#import "HYSequentialDownloadManager.h"
 
-@interface HYImageTableViewCell : UITableViewCell<IADownloadManagerDelegate, IASequentialDownloadManagerDelegate>
+@interface HYImageTableViewCell : UITableViewCell<HYDownloadManagerDelegate, HYSequentialDownloadManagerDelegate>
 
 - (void)setImageWithURL:(NSURL*)url;
 - (void)setImageWithURLs:(NSArray*)urls_;

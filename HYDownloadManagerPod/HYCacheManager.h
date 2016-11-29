@@ -1,5 +1,5 @@
 //
-//  IACacheManager.h
+//  HYCacheManager.h
 //  DownloadManager
 //
 //  Created by Omar on 8/7/13.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface IACacheManager : NSObject
+@interface HYCacheManager : NSObject
 
 + (void) setObject:(id)object forKey:(NSString *)key;
 + (id) objectForKey:(NSString *)key;

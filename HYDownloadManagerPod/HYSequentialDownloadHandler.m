@@ -1,21 +1,21 @@
 //
-//  IASequentialDownloadHandler.m
+//  HYSequentialDownloadHandler.m
 //  DownloadManager
 //
 //  Created by Omar on 8/4/13.
 //  Copyright (c) 2013 InfusionApps. All rights reserved.
 //
 
-#import "IASequentialDownloadHandler.h"
+#import "HYSequentialDownloadHandler.h"
 
-@implementation IASequentialDownloadHandler
+@implementation HYSequentialDownloadHandler
 
-+ (IASequentialDownloadHandler*) downloadingHandlerWithURLs:(NSArray*)urls
-                                              progressBlock:(IASequentialProgressBlock)progressBlock
-                                            completionBlock:(IASequentialCompletionBlock)completionBlock
++ (HYSequentialDownloadHandler*) downloadingHandlerWithURLs:(NSArray*)urls
+                                              progressBlock:(HYSequentialProgressBlock)progressBlock
+                                            completionBlock:(HYSequentialCompletionBlock)completionBlock
                                                         tag:(NSInteger)tag
 {
-    IASequentialDownloadHandler *handler = [[IASequentialDownloadHandler alloc] init];
+    HYSequentialDownloadHandler *handler = [[HYSequentialDownloadHandler alloc] init];
     
     handler.urls = urls;
     handler.progressBlock = progressBlock;
@@ -25,10 +25,10 @@
     return handler;
 }
 
-+ (IASequentialDownloadHandler*) downloadingHandlerWithURLs:(NSArray*)urls
-                                                   delegate:(id<IASequentialDownloadManagerDelegate>)delegate
++ (HYSequentialDownloadHandler*) downloadingHandlerWithURLs:(NSArray*)urls
+                                                   delegate:(id<HYSequentialDownloadManagerDelegate>)delegate
 {
-    IASequentialDownloadHandler *handler = [[IASequentialDownloadHandler alloc] init];
+    HYSequentialDownloadHandler *handler = [[HYSequentialDownloadHandler alloc] init];
     
     handler.urls = urls;
     handler.delegate = delegate;

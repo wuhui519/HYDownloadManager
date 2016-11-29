@@ -1,21 +1,21 @@
 //
-//  IACacheManager.m
+//  HYCacheManager.m
 //  DownloadManager
 //
 //  Created by Omar on 8/7/13.
 //  Copyright (c) 2013 InfusionApps. All rights reserved.
 //
 
-#import "IACacheManager.h"
+#import "HYCacheManager.h"
 #import "EGOCache.h"
 
-@interface IACacheManager()
+@interface HYCacheManager()
 @property (nonatomic, strong) NSMutableDictionary *memCache;
 @end
 
-@implementation IACacheManager
+@implementation HYCacheManager
 
-+ (IACacheManager*) instance
++ (HYCacheManager*) instance
 {
 	static id instance;
 	

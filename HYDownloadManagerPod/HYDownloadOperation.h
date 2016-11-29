@@ -1,5 +1,5 @@
 //
-//  IADownloadOperation.h
+//  HYDownloadOperation.h
 //  DownloadManager
 //
 //  Created by Omar on 8/2/13.
@@ -7,18 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "IADownloadManager.h"
+#import "HYDownloadManager.h"
 
-@class AFHTTPRequestOperation;
-
-@interface IADownloadOperation : NSOperation
+@interface HYDownloadOperation : NSOperation
 @property (nonatomic, strong) NSURL *url;
 
-+ (IADownloadOperation*) downloadingOperationWithURL:(NSURL*)url
++ (HYDownloadOperation*) downloadingOperationWithURL:(NSURL*)url
                                             useCache:(BOOL)useCache
                                             filePath:(NSString *)filePath
-                                       progressBlock:(IAProgressBlock)progressBlock
-                                     completionBlock:(IACompletionBlock)completionBlock;
+                                       progressBlock:(HYProgressBlock)progressBlock
+                                     completionBlock:(HYCompletionBlock)completionBlock;
 
 - (void)start;
 - (void)stop;

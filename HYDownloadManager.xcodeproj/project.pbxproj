@@ -12,14 +12,14 @@
 		6795DBCE1DE57BF800EED2BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6795DBCC1DE57BF800EED2BB /* Main.storyboard */; };
 		6795DBD01DE57BF800EED2BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6795DBCF1DE57BF800EED2BB /* Assets.xcassets */; };
 		6795DBD31DE57BF800EED2BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6795DBD11DE57BF800EED2BB /* LaunchScreen.storyboard */; };
-		6795DBE71DE7D98400EED2BB /* IACacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795DBDC1DE7D98400EED2BB /* IACacheManager.m */; };
-		6795DBE81DE7D98400EED2BB /* IADownloadHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795DBDE1DE7D98400EED2BB /* IADownloadHandler.m */; };
-		6795DBE91DE7D98400EED2BB /* IADownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795DBE01DE7D98400EED2BB /* IADownloadManager.m */; };
-		6795DBEA1DE7D98400EED2BB /* IADownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795DBE21DE7D98400EED2BB /* IADownloadOperation.m */; };
-		6795DBEB1DE7D98400EED2BB /* IASequentialDownloadHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795DBE41DE7D98400EED2BB /* IASequentialDownloadHandler.m */; };
-		6795DBEC1DE7D98400EED2BB /* IASequentialDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795DBE61DE7D98400EED2BB /* IASequentialDownloadManager.m */; };
+		6795DBE71DE7D98400EED2BB /* HYCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795DBDC1DE7D98400EED2BB /* HYCacheManager.m */; };
+		6795DBE81DE7D98400EED2BB /* HYDownloadHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795DBDE1DE7D98400EED2BB /* HYDownloadHandler.m */; };
+		6795DBE91DE7D98400EED2BB /* HYDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795DBE01DE7D98400EED2BB /* HYDownloadManager.m */; };
+		6795DBEB1DE7D98400EED2BB /* HYSequentialDownloadHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795DBE41DE7D98400EED2BB /* HYSequentialDownloadHandler.m */; };
+		6795DBEC1DE7D98400EED2BB /* HYSequentialDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795DBE61DE7D98400EED2BB /* HYSequentialDownloadManager.m */; };
 		6795DBF21DE8230300EED2BB /* HYTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795DBF11DE8230300EED2BB /* HYTableViewController.m */; };
 		6795DBF81DE8250300EED2BB /* HYImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795DBF71DE8250300EED2BB /* HYImageTableViewCell.m */; };
+		6795DBFA1DED178C00EED2BB /* HYDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795DBF91DED178C00EED2BB /* HYDownloadOperation.m */; };
 		8A2D3A2F81C92A6F1C229DBA /* libPods-HYDownloadManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB308CF0FC0332E1ED2E7BD /* libPods-HYDownloadManager.a */; };
 /* End PBXBuildFile section */
 
@@ -33,22 +33,22 @@
 		6795DBCF1DE57BF800EED2BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6795DBD21DE57BF800EED2BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6795DBD41DE57BF800EED2BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6795DBDB1DE7D98400EED2BB /* IACacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACacheManager.h; sourceTree = "<group>"; };
-		6795DBDC1DE7D98400EED2BB /* IACacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACacheManager.m; sourceTree = "<group>"; };
-		6795DBDD1DE7D98400EED2BB /* IADownloadHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADownloadHandler.h; sourceTree = "<group>"; };
-		6795DBDE1DE7D98400EED2BB /* IADownloadHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IADownloadHandler.m; sourceTree = "<group>"; };
-		6795DBDF1DE7D98400EED2BB /* IADownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADownloadManager.h; sourceTree = "<group>"; };
-		6795DBE01DE7D98400EED2BB /* IADownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IADownloadManager.m; sourceTree = "<group>"; };
-		6795DBE11DE7D98400EED2BB /* IADownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADownloadOperation.h; sourceTree = "<group>"; };
-		6795DBE21DE7D98400EED2BB /* IADownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IADownloadOperation.m; sourceTree = "<group>"; };
-		6795DBE31DE7D98400EED2BB /* IASequentialDownloadHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASequentialDownloadHandler.h; sourceTree = "<group>"; };
-		6795DBE41DE7D98400EED2BB /* IASequentialDownloadHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASequentialDownloadHandler.m; sourceTree = "<group>"; };
-		6795DBE51DE7D98400EED2BB /* IASequentialDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASequentialDownloadManager.h; sourceTree = "<group>"; };
-		6795DBE61DE7D98400EED2BB /* IASequentialDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASequentialDownloadManager.m; sourceTree = "<group>"; };
+		6795DBDB1DE7D98400EED2BB /* HYCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYCacheManager.h; sourceTree = "<group>"; };
+		6795DBDC1DE7D98400EED2BB /* HYCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYCacheManager.m; sourceTree = "<group>"; };
+		6795DBDD1DE7D98400EED2BB /* HYDownloadHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYDownloadHandler.h; sourceTree = "<group>"; };
+		6795DBDE1DE7D98400EED2BB /* HYDownloadHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYDownloadHandler.m; sourceTree = "<group>"; };
+		6795DBDF1DE7D98400EED2BB /* HYDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYDownloadManager.h; sourceTree = "<group>"; };
+		6795DBE01DE7D98400EED2BB /* HYDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYDownloadManager.m; sourceTree = "<group>"; };
+		6795DBE11DE7D98400EED2BB /* HYDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYDownloadOperation.h; sourceTree = "<group>"; };
+		6795DBE31DE7D98400EED2BB /* HYSequentialDownloadHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYSequentialDownloadHandler.h; sourceTree = "<group>"; };
+		6795DBE41DE7D98400EED2BB /* HYSequentialDownloadHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYSequentialDownloadHandler.m; sourceTree = "<group>"; };
+		6795DBE51DE7D98400EED2BB /* HYSequentialDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYSequentialDownloadManager.h; sourceTree = "<group>"; };
+		6795DBE61DE7D98400EED2BB /* HYSequentialDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYSequentialDownloadManager.m; sourceTree = "<group>"; };
 		6795DBF01DE8230300EED2BB /* HYTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTableViewController.h; sourceTree = "<group>"; };
 		6795DBF11DE8230300EED2BB /* HYTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTableViewController.m; sourceTree = "<group>"; };
 		6795DBF61DE8250300EED2BB /* HYImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYImageTableViewCell.h; sourceTree = "<group>"; };
 		6795DBF71DE8250300EED2BB /* HYImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYImageTableViewCell.m; sourceTree = "<group>"; };
+		6795DBF91DED178C00EED2BB /* HYDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYDownloadOperation.m; sourceTree = "<group>"; };
 		ACB308CF0FC0332E1ED2E7BD /* libPods-HYDownloadManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HYDownloadManager.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA5ED4E1C0F1598C18DF9E01 /* Pods-HYDownloadManager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HYDownloadManager.release.xcconfig"; path = "Pods/Target Support Files/Pods-HYDownloadManager/Pods-HYDownloadManager.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,18 +122,18 @@
 		6795DBDA1DE7D98400EED2BB /* HYDownloadManagerPod */ = {
 			isa = PBXGroup;
 			children = (
-				6795DBDB1DE7D98400EED2BB /* IACacheManager.h */,
-				6795DBDC1DE7D98400EED2BB /* IACacheManager.m */,
-				6795DBDD1DE7D98400EED2BB /* IADownloadHandler.h */,
-				6795DBDE1DE7D98400EED2BB /* IADownloadHandler.m */,
-				6795DBDF1DE7D98400EED2BB /* IADownloadManager.h */,
-				6795DBE01DE7D98400EED2BB /* IADownloadManager.m */,
-				6795DBE11DE7D98400EED2BB /* IADownloadOperation.h */,
-				6795DBE21DE7D98400EED2BB /* IADownloadOperation.m */,
-				6795DBE31DE7D98400EED2BB /* IASequentialDownloadHandler.h */,
-				6795DBE41DE7D98400EED2BB /* IASequentialDownloadHandler.m */,
-				6795DBE51DE7D98400EED2BB /* IASequentialDownloadManager.h */,
-				6795DBE61DE7D98400EED2BB /* IASequentialDownloadManager.m */,
+				6795DBDB1DE7D98400EED2BB /* HYCacheManager.h */,
+				6795DBDC1DE7D98400EED2BB /* HYCacheManager.m */,
+				6795DBDD1DE7D98400EED2BB /* HYDownloadHandler.h */,
+				6795DBDE1DE7D98400EED2BB /* HYDownloadHandler.m */,
+				6795DBDF1DE7D98400EED2BB /* HYDownloadManager.h */,
+				6795DBE01DE7D98400EED2BB /* HYDownloadManager.m */,
+				6795DBE11DE7D98400EED2BB /* HYDownloadOperation.h */,
+				6795DBF91DED178C00EED2BB /* HYDownloadOperation.m */,
+				6795DBE31DE7D98400EED2BB /* HYSequentialDownloadHandler.h */,
+				6795DBE41DE7D98400EED2BB /* HYSequentialDownloadHandler.m */,
+				6795DBE51DE7D98400EED2BB /* HYSequentialDownloadManager.h */,
+				6795DBE61DE7D98400EED2BB /* HYSequentialDownloadManager.m */,
 			);
 			path = HYDownloadManagerPod;
 			sourceTree = SOURCE_ROOT;
@@ -268,15 +268,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6795DBE71DE7D98400EED2BB /* IACacheManager.m in Sources */,
+				6795DBE71DE7D98400EED2BB /* HYCacheManager.m in Sources */,
 				6795DBF21DE8230300EED2BB /* HYTableViewController.m in Sources */,
 				6795DBF81DE8250300EED2BB /* HYImageTableViewCell.m in Sources */,
-				6795DBE91DE7D98400EED2BB /* IADownloadManager.m in Sources */,
-				6795DBEA1DE7D98400EED2BB /* IADownloadOperation.m in Sources */,
-				6795DBEB1DE7D98400EED2BB /* IASequentialDownloadHandler.m in Sources */,
-				6795DBE81DE7D98400EED2BB /* IADownloadHandler.m in Sources */,
+				6795DBE91DE7D98400EED2BB /* HYDownloadManager.m in Sources */,
+				6795DBEB1DE7D98400EED2BB /* HYSequentialDownloadHandler.m in Sources */,
+				6795DBE81DE7D98400EED2BB /* HYDownloadHandler.m in Sources */,
+				6795DBFA1DED178C00EED2BB /* HYDownloadOperation.m in Sources */,
 				6795DBC81DE57BF800EED2BB /* AppDelegate.m in Sources */,
-				6795DBEC1DE7D98400EED2BB /* IASequentialDownloadManager.m in Sources */,
+				6795DBEC1DE7D98400EED2BB /* HYSequentialDownloadManager.m in Sources */,
 				6795DBC51DE57BF800EED2BB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

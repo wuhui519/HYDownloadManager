@@ -1,31 +1,31 @@
 //
-//  IASequentialDownloadManager.m
+//  HYSequentialDownloadManager.m
 //  DownloadManager
 //
 //  Created by Omar on 8/2/13.
 //  Copyright (c) 2013 InfusionApps. All rights reserved.
 //
 
-#import "IASequentialDownloadManager.h"
-#import "IASequentialDownloadHandler.h"
-#import "IADownloadOperation.h"
+#import "HYSequentialDownloadManager.h"
+#import "HYSequentialDownloadHandler.h"
+#import "HYDownloadOperation.h"
 
-@interface IASequentialDownloadManager()
+@interface HYSequentialDownloadManager()
 
 @end
 
-@interface IASequentialDownloadManager()
+@interface HYSequentialDownloadManager()
 @property (nonatomic, strong) NSMutableDictionary *queues;
 @property (nonatomic, strong) NSMutableDictionary *downloadHandlers;
 @property (nonatomic, strong) NSMutableDictionary *remainingDownloads;
 @end
 
-@implementation IASequentialDownloadManager
+@implementation HYSequentialDownloadManager
 
 #pragma mark Initialization
 #pragma mark -
 
-+ (IASequentialDownloadManager*) instance
++ (HYSequentialDownloadManager*) instance
 {
 	static id instance;
 	
@@ -53,16 +53,16 @@
 
 void (^globalSequentialProgressBlock)
 (float progress, NSURL *url,
- NSArray *urls, NSInteger tag, IASequentialDownloadManager* self) =
+ NSArray *urls, NSInteger tag, HYSequentialDownloadManager* self) =
 ^(float progress, NSURL *url,
-  NSArray *urls, NSInteger tag, IASequentialDownloadManager* self)
+  NSArray *urls, NSInteger tag, HYSequentialDownloadManager* self)
 {
     NSMutableArray *handlers = [self.downloadHandlers objectForKey:urls];
     //Inform the handlers
     int remainingDownloads = [[self.remainingDownloads objectForKey:urls] intValue];
     int index = (int)urls.count - remainingDownloads;
     
-    [handlers enumerateObjectsUsingBlock:^(IASequentialDownloadHandler *handler,
+    [handlers enumerateObjectsUsingBlock:^(HYSequentialDownloadHandler *handler,
                                            NSUInteger idx, BOOL *stop) {
         
         if(handler.progressBlock)
@@ -111,9 +111,9 @@ NSInteger indexOfURL(NSURL *url, NSArray* urls)
 
 void (^globalSequentialCompletionBlock)
 (BOOL success, id response, NSURL *url,
- NSArray *urls, NSInteger tag, IASequentialDownloadManager* self) =
+ NSArray *urls, NSInteger tag, HYSequentialDownloadManager* self) =
 ^(BOOL success, id response, NSURL *url,
- NSArray *urls, NSInteger tag, IASequentialDownloadManager* self)
+ NSArray *urls, NSInteger tag, HYSequentialDownloadManager* self)
 {
     NSMutableArray *handlers = [self.downloadHandlers objectForKey:urls];
     //Inform the handlers
@@ -124,7 +124,7 @@ void (^globalSequentialCompletionBlock)
     remainingDownloads--;
     [self.remainingDownloads setObject:@(remainingDownloads) forKey:urls];
     
-    [handlers enumerateObjectsUsingBlock:^(IASequentialDownloadHandler *handler,
+    [handlers enumerateObjectsUsingBlock:^(HYSequentialDownloadHandler *handler,
                                            NSUInteger idx, BOOL *stop) {
         
         if(handler.completionBlock)
@@ -153,18 +153,18 @@ void (^globalSequentialCompletionBlock)
                             useCache:(BOOL)useCache
                                 urls:(NSArray*)urls
 {
-    IADownloadOperation *op =
+    HYDownloadOperation *op =
     [self downloadOperationForURL:url tag:tag useCache:useCache urls:urls];
     
     [queue addOperation:op];
 }
 
-- (IADownloadOperation*) downloadOperationForURL:(NSURL*)url
+- (HYDownloadOperation*) downloadOperationForURL:(NSURL*)url
                                        fromQueue:(NSOperationQueue*)queue
 {
-    __block IADownloadOperation *op = nil;
+    __block HYDownloadOperation *op = nil;
     
-    [queue.operations enumerateObjectsUsingBlock:^(IADownloadOperation *op_, NSUInteger idx, BOOL *stop) {
+    [queue.operations enumerateObjectsUsingBlock:^(HYDownloadOperation *op_, NSUInteger idx, BOOL *stop) {
         if ([url.absoluteString isEqualToString:op_.url.absoluteString]) {
             op = op_;
             *stop = YES;
@@ -174,13 +174,13 @@ void (^globalSequentialCompletionBlock)
     return op;
 }
 
-- (IADownloadOperation*) downloadOperationForURL:(NSURL*)url
+- (HYDownloadOperation*) downloadOperationForURL:(NSURL*)url
                                              tag:(NSInteger)tag
                                         useCache:(BOOL)useCache
                                             urls:(NSArray*)urls
 {
     NSLog(@"%@",url);
-    IADownloadOperation *op = [IADownloadOperation
+    HYDownloadOperation *op = [HYDownloadOperation
                                downloadingOperationWithURL:url
                                useCache:useCache
                                filePath:nil
@@ -199,7 +199,7 @@ void (^globalSequentialCompletionBlock)
     return op;
 }
 
-#pragma mark IADownloadHandlers and IADownloadOperation Helpers
+#pragma mark HYDownloadHandlers and HYDownloadOperation Helpers
 #pragma mark -
 
 - (NSOperationQueue*)operationQueueWithURLs:(NSArray*)urls
@@ -217,9 +217,9 @@ void (^globalSequentialCompletionBlock)
     return queue;
 }
 
-- (IASequentialDownloadHandler*) downloadHandlersWithTag:(NSInteger)tag
+- (HYSequentialDownloadHandler*) downloadHandlersWithTag:(NSInteger)tag
 {
-    __block IASequentialDownloadHandler *downloadHandler = nil;
+    __block HYSequentialDownloadHandler *downloadHandler = nil;
     
     downloadHandler =
     [self.downloadHandlers objectForKey:@(tag)];
@@ -234,7 +234,7 @@ void (^globalSequentialCompletionBlock)
     {
         for (NSInteger i = handlers.count - 1; i >= 0; i-- )
         {
-            IASequentialDownloadHandler *handler = handlers[i];
+            HYSequentialDownloadHandler *handler = handlers[i];
             
             if (handler.tag == tag)
             {
@@ -251,7 +251,7 @@ void (^globalSequentialCompletionBlock)
     {
         for (NSInteger i = handlers.count - 1; i >= 0; i-- )
         {
-            IASequentialDownloadHandler *handler = handlers[i];
+            HYSequentialDownloadHandler *handler = handlers[i];
             
             if (handler.delegate == listener)
             {
@@ -270,7 +270,7 @@ void (^globalSequentialCompletionBlock)
         
         for (NSInteger j = array.count - 1; j >= 0; j-- )
         {
-            IASequentialDownloadHandler *handler = array[j];
+            HYSequentialDownloadHandler *handler = array[j];
             if (handler.delegate == listener)
             {
                 [array removeObject:handler];
@@ -288,7 +288,7 @@ void (^globalSequentialCompletionBlock)
         
         for (NSInteger j = array.count - 1; j >= 0; j-- )
         {
-            IASequentialDownloadHandler *handler = array[j];
+            HYSequentialDownloadHandler *handler = array[j];
             if (handler.tag == tag)
             {
                 [array removeObject:handler];
@@ -317,7 +317,7 @@ void (^globalSequentialCompletionBlock)
     }];
 }
 
-- (void) attachNewHandlerWithListener:(id<IASequentialDownloadManagerDelegate>)listener
+- (void) attachNewHandlerWithListener:(id<HYSequentialDownloadManagerDelegate>)listener
                                toURLs:(NSArray*)urls
 {
     //We should remove the old handler
@@ -330,15 +330,15 @@ void (^globalSequentialCompletionBlock)
         handlers = [NSMutableArray new];
     
     //Add a new handler
-    IASequentialDownloadHandler *handler =
-    [IASequentialDownloadHandler downloadingHandlerWithURLs:urls delegate:listener];
+    HYSequentialDownloadHandler *handler =
+    [HYSequentialDownloadHandler downloadingHandlerWithURLs:urls delegate:listener];
     
     [handlers addObject:handler];
     [self.downloadHandlers setObject:handlers forKey:urls];
 }
 
-- (void) attachNewHandlerWithProgressBlock:(IASequentialProgressBlock)progressBlock
-                           completionBlock:(IASequentialCompletionBlock)completionBlock
+- (void) attachNewHandlerWithProgressBlock:(HYSequentialProgressBlock)progressBlock
+                           completionBlock:(HYSequentialCompletionBlock)completionBlock
                                        tag:(NSInteger)tag
                                     toURLs:(NSArray*)urls
 {
@@ -352,8 +352,8 @@ void (^globalSequentialCompletionBlock)
         handlers = [NSMutableArray new];
     
     //Add a new handler
-    IASequentialDownloadHandler *handler =
-    [IASequentialDownloadHandler downloadingHandlerWithURLs:urls
+    HYSequentialDownloadHandler *handler =
+    [HYSequentialDownloadHandler downloadingHandlerWithURLs:urls
                                               progressBlock:progressBlock
                                             completionBlock:completionBlock
                                                         tag:tag];
@@ -363,7 +363,7 @@ void (^globalSequentialCompletionBlock)
     [self.downloadHandlers setObject:handlers forKey:urls];
 }
 
-- (void) removeListener:(id<IASequentialDownloadManagerDelegate>)listener
+- (void) removeListener:(id<HYSequentialDownloadManagerDelegate>)listener
 {
     [self removeAllHandlersWithListener:listener];
 }
@@ -393,14 +393,14 @@ void (^globalSequentialCompletionBlock)
                                  useCache:useCache];
 }
 
-+ (void) attachListener:(id<IASequentialDownloadManagerDelegate>)listener toURLs:(NSArray*)urls
++ (void) attachListener:(id<HYSequentialDownloadManagerDelegate>)listener toURLs:(NSArray*)urls
 {
     [[self instance] attachNewHandlerWithListener:listener toURLs:urls];
 }
 
 + (void) attachListenerWithObject:(id)object
-                    progressBlock:(IASequentialProgressBlock)progressBlock
-                  completionBlock:(IASequentialCompletionBlock)completionBlock
+                    progressBlock:(HYSequentialProgressBlock)progressBlock
+                  completionBlock:(HYSequentialCompletionBlock)completionBlock
                            toURLs:(NSArray*)urls
 {
     [[self instance] attachNewHandlerWithProgressBlock:progressBlock
@@ -414,7 +414,7 @@ void (^globalSequentialCompletionBlock)
     [[self instance] removeHandlerWithTag:(int)object];
 }
 
-+ (void) detachListener:(id<IASequentialDownloadManagerDelegate>)listener
++ (void) detachListener:(id<HYSequentialDownloadManagerDelegate>)listener
 {
     [[self instance] removeAllHandlersWithListener:listener];
 }

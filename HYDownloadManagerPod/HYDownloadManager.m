@@ -1,16 +1,16 @@
 //
-//  IADownloadManager.m
+//  HYDownloadManager.m
 //  DownloadManager
 //
 //  Created by Omar on 8/2/13.
 //  Copyright (c) 2013 InfusionApps. All rights reserved.
 //
 
-#import "IADownloadManager.h"
-#import "IADownloadHandler.h"
-#import "IADownloadOperation.h"
+#import "HYDownloadManager.h"
+#import "HYDownloadHandler.h"
+#import "HYDownloadOperation.h"
 
-@interface IADownloadManager()
+@interface HYDownloadManager()
 
 @property (nonatomic, strong) NSMutableDictionary *downloadOperations;
 @property (nonatomic, strong) NSMutableDictionary *downloadHandlers;
@@ -19,12 +19,12 @@
 
 @end
 
-@implementation IADownloadManager
+@implementation HYDownloadManager
 
 #pragma mark Initialization
 #pragma mark -
 
-+ (IADownloadManager*) instance
++ (HYDownloadManager*) instance
 {
 	static id instance;
 	
@@ -49,12 +49,12 @@
 #pragma mark Global Blocks
 #pragma mark -
 
-void (^globalProgressBlock)(float progress, NSURL *url, IADownloadManager* self) =
-^(float progress, NSURL *url, IADownloadManager* self)
+void (^globalProgressBlock)(float progress, NSURL *url, HYDownloadManager* self) =
+^(float progress, NSURL *url, HYDownloadManager* self)
 {
     NSMutableArray *handlers = [self.downloadHandlers objectForKey:url];
     //Inform the handlers
-    [handlers enumerateObjectsUsingBlock:^(IADownloadHandler *handler, NSUInteger idx, BOOL *stop) {
+    [handlers enumerateObjectsUsingBlock:^(HYDownloadHandler *handler, NSUInteger idx, BOOL *stop) {
         
         if(handler.progressBlock)
             handler.progressBlock(progress, url);
@@ -65,12 +65,12 @@ void (^globalProgressBlock)(float progress, NSURL *url, IADownloadManager* self)
     }];
 };
 
-void (^globalCompletionBlock)(BOOL success, id response, NSURL *url, IADownloadManager* self) =
-^(BOOL success, id response, NSURL *url, IADownloadManager* self)
+void (^globalCompletionBlock)(BOOL success, id response, NSURL *url, HYDownloadManager* self) =
+^(BOOL success, id response, NSURL *url, HYDownloadManager* self)
 {
     NSMutableArray *handlers = [self.downloadHandlers objectForKey:url];
     //Inform the handlers
-    [handlers enumerateObjectsUsingBlock:^(IADownloadHandler *handler, NSUInteger idx, BOOL *stop) {
+    [handlers enumerateObjectsUsingBlock:^(HYDownloadHandler *handler, NSUInteger idx, BOOL *stop) {
     
         if(handler.completionBlock)
             handler.completionBlock(success, response);
@@ -90,7 +90,7 @@ void (^globalCompletionBlock)(BOOL success, id response, NSURL *url, IADownloadM
 #pragma mark Entry Point
 #pragma mark -
 
-- (void) attachNewHandlerWithListener:(id<IADownloadManagerDelegate>)listener
+- (void) attachNewHandlerWithListener:(id<HYDownloadManagerDelegate>)listener
                                 toURL:(NSURL*)url
 {
     //We should remove the old handler
@@ -102,7 +102,7 @@ void (^globalCompletionBlock)(BOOL success, id response, NSURL *url, IADownloadM
     if (!handlers)
         handlers = [NSMutableArray new];
     
-    IADownloadHandler *handler = [IADownloadHandler downloadingHandlerWithURL:url
+    HYDownloadHandler *handler = [HYDownloadHandler downloadingHandlerWithURL:url
                                                                      delegate:listener];
     
     
@@ -110,8 +110,8 @@ void (^globalCompletionBlock)(BOOL success, id response, NSURL *url, IADownloadM
     [self.downloadHandlers setObject:handlers forKey:url];
 }
 
-- (void) attachNewHandlerWithProgressBlock:(IAProgressBlock)progressBlock
-                           completionBlock:(IACompletionBlock)completionBlock
+- (void) attachNewHandlerWithProgressBlock:(HYProgressBlock)progressBlock
+                           completionBlock:(HYCompletionBlock)completionBlock
                                        tag:(NSInteger)tag
                                      toURL:(NSURL*)url
 {
@@ -123,7 +123,7 @@ void (^globalCompletionBlock)(BOOL success, id response, NSURL *url, IADownloadM
     if (!handlers)
         handlers = [NSMutableArray new];
     
-    IADownloadHandler *handler = [IADownloadHandler downloadingHandlerWithURL:url
+    HYDownloadHandler *handler = [HYDownloadHandler downloadingHandlerWithURL:url
                                                                 progressBlock:progressBlock
                                                               completionBlock:completionBlock
                                                                           tag:tag];
@@ -145,7 +145,7 @@ void (^globalCompletionBlock)(BOOL success, id response, NSURL *url, IADownloadM
     if([self isDownloadingItemWithURL:url])
         return;
     
-    IADownloadOperation *downloadingOperation = [IADownloadOperation
+    HYDownloadOperation *downloadingOperation = [HYDownloadOperation
                                                  downloadingOperationWithURL:url
                                                  useCache:useCache
                                                  filePath:path
@@ -174,7 +174,7 @@ void (^globalCompletionBlock)(BOOL success, id response, NSURL *url, IADownloadM
     return [self.downloadOperations objectForKey:url] != nil;
 }
 
-#pragma mark IADownloadHandlers and IADownloadOperation Helpers
+#pragma mark HYDownloadHandlers and HYDownloadOperation Helpers
 #pragma mark -
 
 - (void)removeHandlerWithURL:(NSURL*)url tag:(NSInteger)tag
@@ -184,7 +184,7 @@ void (^globalCompletionBlock)(BOOL success, id response, NSURL *url, IADownloadM
     {
         for (NSInteger i = handlers.count - 1; i >= 0; i-- )
         {
-            IADownloadHandler *handler = handlers[i];
+            HYDownloadHandler *handler = handlers[i];
             
             if (handler.tag == tag)
             {
@@ -201,7 +201,7 @@ void (^globalCompletionBlock)(BOOL success, id response, NSURL *url, IADownloadM
     {
         for (NSInteger i = handlers.count - 1; i >= 0; i-- )
         {
-            IADownloadHandler *handler = handlers[i];
+            HYDownloadHandler *handler = handlers[i];
             
             if (handler.delegate == listener)
             {
@@ -220,7 +220,7 @@ void (^globalCompletionBlock)(BOOL success, id response, NSURL *url, IADownloadM
         
         for (NSInteger j = array.count - 1; j >= 0; j-- )
         {
-            IADownloadHandler *handler = array[j];
+            HYDownloadHandler *handler = array[j];
             if (handler.tag == tag)
             {
                 [array removeObject:handler];
@@ -238,7 +238,7 @@ void (^globalCompletionBlock)(BOOL success, id response, NSURL *url, IADownloadM
         
         for (NSInteger j = array.count - 1; j >= 0; j-- )
         {
-            IADownloadHandler *handler = array[j];
+            HYDownloadHandler *handler = array[j];
             if (handler.delegate == listener)
             {
                 [array removeObject:handler];
@@ -253,7 +253,7 @@ void (^globalCompletionBlock)(BOOL success, id response, NSURL *url, IADownloadM
 
 + (void) downloadItemWithURL:(NSURL*)url useCache:(BOOL)useCache
 {
-    [IADownloadManager downloadItemWithURL:url useCache:useCache saveToPath:nil];
+    [HYDownloadManager downloadItemWithURL:url useCache:useCache saveToPath:nil];
 }
 
 + (void) downloadItemWithURL:(NSURL*)url
@@ -263,19 +263,19 @@ void (^globalCompletionBlock)(BOOL success, id response, NSURL *url, IADownloadM
     [[self instance] startDownloadOperation:url useCache:useCache saveToPath:path];
 }
 
-+ (void) attachListener:(id<IADownloadManagerDelegate>)listener toURL:(NSURL*)url
++ (void) attachListener:(id<HYDownloadManagerDelegate>)listener toURL:(NSURL*)url
 {
     [[self instance] attachNewHandlerWithListener:listener toURL:url];
 }
 
-+ (void) detachListener:(id<IADownloadManagerDelegate>)listener;
++ (void) detachListener:(id<HYDownloadManagerDelegate>)listener;
 {
     [[self instance] removeHandlerWithListener:listener];
 }
 
 + (void) attachListenerWithObject:(id)object
-                    progressBlock:(IAProgressBlock)progressBlock
-                  completionBlock:(IACompletionBlock)completionBlock
+                    progressBlock:(HYProgressBlock)progressBlock
+                  completionBlock:(HYCompletionBlock)completionBlock
                             toURL:(NSURL*)url
 
 {

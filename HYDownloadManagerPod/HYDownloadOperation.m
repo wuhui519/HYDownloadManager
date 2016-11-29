@@ -1,17 +1,17 @@
 //
-//  IADownloadOperation.m
+//  HYDownloadOperation.m
 //  DownloadManager
 //
 //  Created by Omar on 8/2/13.
 //  Copyright (c) 2013 InfusionApps. All rights reserved.
 //
 
-#import "IADownloadOperation.h"
+#import "HYDownloadOperation.h"
 #import "AFNetworking.h"
-#import "IACacheManager.h"
+#import "HYCacheManager.h"
 #import <CommonCrypto/CommonDigest.h>
 
-@interface IADownloadOperation ()
+@interface HYDownloadOperation ()
 {
     BOOL executing;
     BOOL cancelled;
@@ -21,15 +21,15 @@
 @property (nonatomic, strong) NSURLSessionDownloadTask *dataTask;
 @end
 
-@implementation IADownloadOperation
+@implementation HYDownloadOperation
 
-+ (IADownloadOperation*) downloadingOperationWithURL:(NSURL*)url
++ (HYDownloadOperation*) downloadingOperationWithURL:(NSURL*)url
                                             useCache:(BOOL)useCache
                                             filePath:(NSString *)filePath
-                                       progressBlock:(IAProgressBlock)progressBlock
-                                     completionBlock:(IACompletionBlock)completionBlock
+                                       progressBlock:(HYProgressBlock)progressBlock
+                                     completionBlock:(HYCompletionBlock)completionBlock
 {
-    IADownloadOperation *op = [IADownloadOperation new];
+    HYDownloadOperation *op = [HYDownloadOperation new];
     op.url = url;
     op->_finalFilePath = filePath;
  
@@ -40,7 +40,7 @@
         return nil;
     }
     
-    __weak IADownloadOperation *weakOp = op;
+    __weak HYDownloadOperation *weakOp = op;
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
@@ -50,8 +50,8 @@
             progressBlock(progress, url);
         } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
             NSData *responseObject = [[NSFileManager defaultManager] contentsAtPath:targetPath.relativePath];
-            [IADownloadOperation setCacheWithData:responseObject url:url];
-            __strong IADownloadOperation *StrongOp = weakOp;
+            [HYDownloadOperation setCacheWithData:responseObject url:url];
+            __strong HYDownloadOperation *StrongOp = weakOp;
             NSURL *fileURL = nil;
             if(StrongOp != nil && StrongOp->_finalFilePath)
             {
@@ -61,7 +61,7 @@
             completionBlock(YES, responseObject);
             return fileURL;
         } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-            __strong IADownloadOperation *StrongOp = weakOp;
+            __strong HYDownloadOperation *StrongOp = weakOp;
             completionBlock(NO, nil);
             [StrongOp finish];
         }];
@@ -96,17 +96,17 @@
 + (BOOL)hasCacheForURL:(NSURL*)url
 {
     NSString *encodeKey = [self cacheKeyForUrl:url];
-    return [IACacheManager hasObjectForKey:encodeKey];
+    return [HYCacheManager hasObjectForKey:encodeKey];
 }
 
 - (void)fetchItemFromCacheForURL:(NSURL*)url
-                   progressBlock:(IAProgressBlock)progressBlock
-                 completionBlock:(IACompletionBlock)completionBlock
+                   progressBlock:(HYProgressBlock)progressBlock
+                 completionBlock:(HYCompletionBlock)completionBlock
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        NSString *encodeKey = [IADownloadOperation cacheKeyForUrl:url];
-        NSData *data = [IACacheManager objectForKey:encodeKey];
+        NSString *encodeKey = [HYDownloadOperation cacheKeyForUrl:url];
+        NSData *data = [HYCacheManager objectForKey:encodeKey];
 
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -123,7 +123,7 @@
                      url:(NSURL*)url
 {
     NSString *encodeKey = [self cacheKeyForUrl:url];
-    [IACacheManager setObject:data forKey:encodeKey];
+    [HYCacheManager setObject:data forKey:encodeKey];
 }
 
 + (NSString*)cacheKeyForUrl:(NSURL*)url

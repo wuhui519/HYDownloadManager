@@ -24,17 +24,17 @@
     if (parallel)
     {
 #if USE_BLOCKS
-        [IADownloadManager detachObjectFromListening:self];
+        [HYDownloadManager detachObjectFromListening:self];
 #else
-        [IADownloadManager detachListener:self];
+        [HYDownloadManager detachListener:self];
 #endif
     }
     else
     {
 #if USE_BLOCKS
-        [IASequentialDownloadManager detachObjectFromListening:self];
+        [HYSequentialDownloadManager detachObjectFromListening:self];
 #else
-        [IASequentialDownloadManager detachListener:self];
+        [HYSequentialDownloadManager detachListener:self];
 #endif
     }
 }
@@ -49,11 +49,11 @@
     
     urls = urls_;
     
-    [IASequentialDownloadManager downloadItemWithURLs:urls
+    [HYSequentialDownloadManager downloadItemWithURLs:urls
                                              useCache:YES];
     
 #if USE_BLOCKS
-    [IASequentialDownloadManager attachListenerWithObject:self
+    [HYSequentialDownloadManager attachListenerWithObject:self
                                             progressBlock:^(float progress, NSInteger index) {
                                                 
                                                 [self sequentialManagerProgress:progress
@@ -68,7 +68,7 @@
                                               
                                           } toURLs:urls];
 #else
-    [IASequentialDownloadManager attachListener:self toURLs:urls];
+    [HYSequentialDownloadManager attachListener:self toURLs:urls];
 #endif
 }
 
@@ -82,11 +82,11 @@
     
     url = url_;
     
-    [IADownloadManager downloadItemWithURL:url useCache:YES];
+    [HYDownloadManager downloadItemWithURL:url useCache:YES];
     
     //Use delegate or blocks to inform you of the progress
 #if USE_BLOCKS
-    [IADownloadManager attachListenerWithObject:self
+    [HYDownloadManager attachListenerWithObject:self
                                   progressBlock:^(float progress, NSURL *url) {
                                       [self downloadManagerDidProgress:progress];
                                   }
@@ -94,7 +94,7 @@
                                     [self downloadManagerDidFinish:success response:response];
                                 } toURL:url];
 #else
-    [IADownloadManager attachListener:self toURL:url];
+    [HYDownloadManager attachListener:self toURL:url];
 #endif
 }
 
