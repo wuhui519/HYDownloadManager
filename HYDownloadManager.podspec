@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "HYDownloadManager"
   s.version      = "1.0.1"
-  s.summary      = "iOS download manager, Download a set of files in parallel and sequential order. Updated version iscludes AFNetworking V3.0, and fixes compileing error in Xcode 8.0."
+  s.summary      = "A tool downloads file with memory cache, temporary cache and permanent store."
   s.homepage     = "https://github.com/wuhui519/HYDownloadManager"
   s.author       = { "wuhui519" => "wuhui519@gmail.com" }
   s.source       = { :git => "https://github.com/wuhui519/HYDownloadManager.git", :tag => "1.0.1" }
