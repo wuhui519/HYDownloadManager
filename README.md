@@ -2,7 +2,7 @@
 a tool downloads file with memory cache, temporary cache and permanent store.
 
 ## How To Use
-1. parallel downloading:
+- parallel downloading:
 HYDownloadManager
 ```
 //Start the download request for a URL, note that the same URL will never be downloaded twice
@@ -16,7 +16,7 @@ HYDownloadManager
 + (void) attachListener:(id<HYDownloadManagerDelegate>)listener toURL:(NSURL*)url;
 ```                 
                     
-2. sequential downloading:
+- sequential downloading:
 HYSequentialDownloadHandler
 ```
 + (HYSequentialDownloadHandler*) downloadingHandlerWithURLs:(NSArray*)urls
