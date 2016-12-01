@@ -55,7 +55,7 @@
             NSURL *fileURL = nil;
             if(StrongOp != nil && StrongOp->_finalFilePath)
             {
-                fileURL = [NSURL URLWithString:StrongOp->_finalFilePath];
+                fileURL = [NSURL fileURLWithPath:StrongOp->_finalFilePath];
             }
             [StrongOp finish];
             completionBlock(YES, responseObject);
