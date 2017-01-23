@@ -55,6 +55,10 @@
             NSURL *fileURL = nil;
             if(StrongOp != nil && StrongOp->_finalFilePath)
             {
+                // AFNetworking在保存文件时，遇到文件已存在的情况不会覆盖，因此先删除掉已存在文件
+                if ([[NSFileManager defaultManager] fileExistsAtPath:StrongOp->_finalFilePath]) {
+                    [[NSFileManager defaultManager] removeItemAtPath:StrongOp->_finalFilePath error:nil];
+                }
                 fileURL = [NSURL fileURLWithPath:StrongOp->_finalFilePath];
             }
             [StrongOp finish];
