@@ -147,14 +147,15 @@ void (^globalSequentialCompletionBlock)
 #pragma mark Downloading
 #pragma mark -
 
-- (void) addDownloadOperationWithURL:(NSURL*)url
-                             toQueue:(NSOperationQueue*)queue
+- (void) addDownloadOperationWithURL:(NSURL *)url
+                             toQueue:(NSOperationQueue *)queue
                                  tag:(NSInteger)tag
                             useCache:(BOOL)useCache
-                                urls:(NSArray*)urls
+                                urls:(NSArray *)urls
+                               paths:(NSString *)path
 {
     HYDownloadOperation *op =
-    [self downloadOperationForURL:url tag:tag useCache:useCache urls:urls];
+    [self downloadOperationForURL:url tag:tag useCache:useCache urls:urls path:path];
     
     [queue addOperation:op];
 }
@@ -178,12 +179,12 @@ void (^globalSequentialCompletionBlock)
                                              tag:(NSInteger)tag
                                         useCache:(BOOL)useCache
                                             urls:(NSArray*)urls
+                                            path:(NSString *)path
 {
-    NSLog(@"%@",url);
     HYDownloadOperation *op = [HYDownloadOperation
                                downloadingOperationWithURL:url
                                useCache:useCache
-                               filePath:nil
+                               filePath:path
                                progressBlock:^(float progress, NSURL *url) {
                                    
                                    globalSequentialProgressBlock(progress, url, urls,
@@ -303,6 +304,10 @@ void (^globalSequentialCompletionBlock)
 - (void) downloadItemWithURLs:(NSArray*)urls
                      useCache:(BOOL)useCache
 {
+    [self downloadItemWithURLs:urls useCache:useCache saveToPath:nil];
+}
+
+- (void)downloadItemWithURLs:(NSArray *)urls useCache:(BOOL)useCache saveToPath:(NSArray *)paths {
     //Create a new sequential download operation if it does not already Exist
     //Do we already have a queue?
     NSOperationQueue *queue = [self operationQueueWithURLs:urls];
@@ -311,9 +316,10 @@ void (^globalSequentialCompletionBlock)
         return;
     
     [urls enumerateObjectsUsingBlock:^(NSURL *url, NSUInteger idx, BOOL *stop) {
+        NSString *path = idx < paths.count ? paths[idx] : nil;
         //Do we already have this download item?
         [self addDownloadOperationWithURL:url toQueue:queue
-                                      tag:0 useCache:useCache urls:urls];
+                                      tag:0 useCache:useCache urls:urls paths:path];
     }];
 }
 
@@ -391,6 +397,14 @@ void (^globalSequentialCompletionBlock)
 {
     [[self instance] downloadItemWithURLs:urls
                                  useCache:useCache];
+}
+
++ (void)downloadItemWithURLs:(NSArray *)urls
+                    useCache:(BOOL)useCache
+                  saveToPath:(NSArray *)path {
+    [[self instance] downloadItemWithURLs:urls
+                                 useCache:useCache
+                               saveToPath:path];
 }
 
 + (void) attachListener:(id<HYSequentialDownloadManagerDelegate>)listener toURLs:(NSArray*)urls

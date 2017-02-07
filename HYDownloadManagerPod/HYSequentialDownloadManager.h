@@ -20,8 +20,12 @@ typedef void (^HYSequentialCompletionBlock)(BOOL success, id response, NSInteger
 
 //Start the download request for a sequence of URLs,
 //note that the same sequence of URLs will never be downloaded twice
-+ (void) downloadItemWithURLs:(NSArray*)urls
++ (void) downloadItemWithURLs:(NSArray *)urls
                      useCache:(BOOL)useCache;
+
++ (void)downloadItemWithURLs:(NSArray *)urls
+                    useCache:(BOOL)useCache
+                  saveToPath:(NSArray *)path;
 
 //Delegate based events
 // 1 set of URLs can have multiple listeners
